@@ -59,6 +59,8 @@
 		AFE6937CD5A345CFA96DD875 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F0428004BAE5480C97BDDB28 /* Octicons.ttf */; };
 		AE33B215B4E64A46BCF42B6C /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CF5FA0A4FDA4F55AACC855F /* SimpleLineIcons.ttf */; };
 		3539FFC9571E45838C58EF4D /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21D0F4CF33854F858F3F1651 /* Zocial.ttf */; };
+		5A4991C2EE034BD78BAFB0B8 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B946CAA8D0774371895A9041 /* libRNSVG.a */; };
+		723F86B620094A28B0EA5F3E /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D221EEDB1367452383E269AA /* libRNSVG-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -390,6 +392,9 @@
 		F0428004BAE5480C97BDDB28 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3CF5FA0A4FDA4F55AACC855F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		21D0F4CF33854F858F3F1651 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F5961C98D4964CD79D00B4DB /* RNSVG.xcodeproj */ = {isa = PBXFileReference; name = "RNSVG.xcodeproj"; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		B946CAA8D0774371895A9041 /* libRNSVG.a */ = {isa = PBXFileReference; name = "libRNSVG.a"; path = "libRNSVG.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		D221EEDB1367452383E269AA /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; name = "libRNSVG-tvOS.a"; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +427,7 @@
 				A33D42A7580446158BEB9CCD /* libReactNativeBiometrics.a in Frameworks */,
 				82F901C9ADFE49BF80304105 /* libRNGestureHandler.a in Frameworks */,
 				93AFA99D22B04C4EA1074315 /* libRNVectorIcons.a in Frameworks */,
+				5A4991C2EE034BD78BAFB0B8 /* libRNSVG.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +445,7 @@
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
 				30AF4946DB9A4CDBA0F623E9 /* libRNVectorIcons-tvOS.a in Frameworks */,
+				723F86B620094A28B0EA5F3E /* libRNSVG-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +623,7 @@
 				A60DC8118BF04A47BF3BE1B8 /* ReactNativeBiometrics.xcodeproj */,
 				EBE9C2566F6A438389C5C6E6 /* RNGestureHandler.xcodeproj */,
 				DFEA9D242CBE44F581AE3E58 /* RNVectorIcons.xcodeproj */,
+				F5961C98D4964CD79D00B4DB /* RNSVG.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1286,6 +1294,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1293,6 +1303,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1318,6 +1329,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1325,6 +1338,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1351,6 +1365,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1376,6 +1391,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1409,6 +1425,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1416,6 +1434,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1449,6 +1468,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1456,6 +1477,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1488,6 +1510,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1495,6 +1519,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1527,6 +1552,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1534,6 +1561,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-biometrics\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
