@@ -22,7 +22,7 @@ export default class App extends Component {
   };
 
   componentDidMount(){
-		this.travellor();
+		this.combineTwoStrings();
 	}
 
   constructor(props) {
@@ -41,7 +41,7 @@ export default class App extends Component {
   combineTwoStrings = () => {
     var string1 = "https://nextcloud-fi.webo.hosting/remote.php/dav/files/";
     var string2 = string1.concat(this.state.username, "/")
-
+    console.log("at login.js ",string2);
     this.setState({ side: string2 }, () => {
       this.login();
     });
@@ -59,16 +59,17 @@ export default class App extends Component {
         console.log("inside the application");
         console.log("Dir contents:", contents);
 
-        Biometrics.simplePrompt('Confirm fingerprint')
-          .then(() => {
-            console.log('successful fingerprint provided')
+        this.travellor();
+        // Biometrics.simplePrompt('Confirm fingerprint')
+        //   .then(() => {
+        //     console.log('successful fingerprint provided')
 
-            this.travellor();
-          })
-          .catch(() => {
-            console.log('fingerprint failed or prompt was cancelled')
-            alert("Fingerprint can't access into system");
-          })
+        //     this.travellor();
+        //   })
+        //   .catch(() => {
+        //     console.log('fingerprint failed or prompt was cancelled')
+        //     alert("Fingerprint can't access into system");
+        //   })
 
       } else {
         Alert.alert("Please key in the correct \nusername and password")
