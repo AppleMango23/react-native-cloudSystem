@@ -1,6 +1,6 @@
 import Biometrics from 'react-native-biometrics'
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, ImageBackground, Image, TextInput, KeyboardAvoidingView } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, ImageBackground, Image, TextInput, KeyboardAvoidingView,StatusBar} from 'react-native';
 import { RNSlidingButton, SlideDirection } from 'rn-sliding-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input } from 'react-native-elements';
@@ -22,6 +22,8 @@ export default class App extends Component {
   };
 
   componentDidMount(){
+    StatusBar.setBarStyle( 'light-content',true)
+    StatusBar.setBackgroundColor("#A9A9A9")
 		this.combineTwoStrings();
 	}
 
@@ -83,6 +85,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.log("test1");
     return (
       <ImageBackground source={require('../images/Background.png')} style={styles.container} >
         <Image style={styles.imageSize} source={require('../images/Logo.png')} />
@@ -146,12 +149,13 @@ export default class App extends Component {
                 this.setState({iconMou:'unlock-alt'})
               }
               slideDirection={SlideDirection.RIGHT}>
-              <View style={{ left:7}}>
+              <View style={{ left:13,flexDirection:'row'}}>
               <Icon
               name={this.state.iconMou}
               size={36}
               color='white'
               />
+              {/* <Text style={{color:'white',fontSize:20,paddingVertical:6}}>   Slide to right -> </Text> */}
               
               </View>
             </RNSlidingButton>
