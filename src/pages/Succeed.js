@@ -1,6 +1,6 @@
 import Biometrics from 'react-native-biometrics'
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text,TextInput, View,Button,StatusBar,ImageBackground,BackHandler,TouchableOpacity,Image,ListView,ActivityIndicator,ScrollView} from 'react-native';
+import {Platform, StyleSheet, Text,TextInput, View,Button,StatusBar,ImageBackground,BackHandler,Animated,TouchableOpacity,Image,ListView,ActivityIndicator,ScrollView} from 'react-native';
 import { Header,Icon,Overlay } from 'react-native-elements';
 import {DrawerNavigator} from 'react-navigation';
 import JellySideMenu from 'react-native-jelly-side-menu'
@@ -10,6 +10,7 @@ import {
 } from "@buttercup/mobile-compat";
 import ActionButton from 'react-native-action-button';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import Swipeout from 'react-native-swipeout';
 
 
 const instructions = Platform.select({
@@ -18,6 +19,29 @@ const instructions = Platform.select({
     'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu',
 });
+
+  var swipeoutBtns = [
+    {
+      color:'green',
+      text: 'rename',
+      backgroundColor:'white',
+      
+    },
+    {
+      color:'red',
+      text: 'delete',
+      backgroundColor:'white',
+      
+    },
+    {
+      color:'black',
+      text: 'move',
+      backgroundColor:'white',
+      
+    },
+    
+    
+  ]
 
   export default class Succeed extends Component {
   static navigationOptions = {
@@ -95,6 +119,8 @@ const instructions = Platform.select({
       rowView:false,
       isVisible:true,
       timer: 6,
+      closeOrOpenSlide:false,
+      bounceValue: new Animated.Value(100),  //This is the initial position of the subview
     }
     this.arrayholder = [];
     const zaza = createWebDAVAdapter(
@@ -111,13 +137,9 @@ const instructions = Platform.select({
       }
     });
   }
-s
-  helloHopeThisCan = () => {
+  
 
-    // this.setState(() => ({
-    //   dataSource: this.state.dataSource.cloneWithRows(this.state.contentInside[0]),
-    //   data: this.state.contentInside[0],
-    // }));
+  helloHopeThisCan = () => {
 
     //Below is for search engine
     const toto = createWebDAVAdapter(
@@ -159,7 +181,6 @@ s
 
 
     wfs.stat(string2, (err, data) => {
-      // console.log("Is file:", data.isFile());
       testThing = data.isFile();
       if (statement !== testThing) {
         this.state.forFileArray.push(rowData);
@@ -205,41 +226,55 @@ s
       </View>
     )
   }
-  changingStatus=()=>{
-    if(this.state.changingStatus === "zzz"){
-      return(
-        <Text>Hey There</Text>
-      )
-    }
-    else{
-      return(
-        <TextInput
-              // value={this.state.username}
-              // onChangeText={username => this.setState({ username })}
-              // style={styles.textInputStyle}
-              placeholder="Email"
-              underlineColorAndroid="#000080"
 
-        />
-      )
-    }
-    
-  }
   travelToSearch=()=>{
     this.props.navigation.navigate('ShowSearch')
-    // this.props.navigation.openDrawer();
   }
 
-  visibleFunction=()=>{
-    return ('false');
+  testingHaveToWork=(rowData)=>{
+
+
+    this.setState({closeOrOpenSlide:true}, () => {
+      // alert(rowData);
+
+    });
   }
 
-  
+  HaveTowWork=(rowData)=>{
+    
+    var swipeoutBtns22 = [
+      {
+        color:'green',
+        text: 'rename',
+        backgroundColor:'white',
+        //On press will go to this place
+        onPress:()=>{ this.testingHaveToWork(rowData)}
+        
+      },
+      {
+        color:'red',
+        text: 'delete',
+        backgroundColor:'white',
+        onPress:()=>{ this.testingHaveToWork(rowData)}
+      },
+      {
+        color:'black',
+        text: 'move',
+        backgroundColor:'white',
+        onPress:()=>{ this.testingHaveToWork(rowData)}
+      },
+      
+      
+    ]
+
+
+    return (swipeoutBtns22)
+  }
 
   defaultView=()=>{
     return(
-    <View visible={this.state.rowView}>
-
+    <View>
+      
       <Text></Text>
       <Text style={{left:5,fontSize:23}}>Folder</Text>
       <View style={{justifyContent:'center',alignItems: 'center',}}>
@@ -252,45 +287,49 @@ s
         // scrollEnabled={true}
         contentContainerStyle={styles.list}
         renderRow={(rowData) =>
-        
+          <Swipeout backgroundColor={'white'} style={{borderRadius:0}} right={this.HaveTowWork(rowData)} autoClose={true}>
           <TouchableOpacity
-            delayLongPress={500}x
-            style={styles.button1}
-            // style={this.state.Noahyek}
+          delayLongPress={500}x
+          style={styles.button1}
+          // style={this.state.Noahyek}
 
-            visible={this.state.cancelFor3Selection}
-            onLongPress={() => {
-              Alert.alert(
-                'Action',
-                'please do your choice wisely',
-                [
-                  { text: 'RENAME', onPress: () => { this.showDialog(rowData) } },
-                  { text: 'DELETE', onPress: () => { this.deleteFunctionTriger(rowData) } },
-                  { text: 'CANCEL', onPress: () => { this.cancelFor3Selection() } },
-                ],
-                { cancelable: false }
-              )
-            }}
-            onPress={() => { this.CheckingBeforeGoInFunction(rowData) }}
-          >
-            <Text>      </Text>
-            <Icon name='folder' />
-            <Text>  </Text>
-            <Text style={styles.buttonText}>{rowData}          </Text>
-            <TouchableOpacity
-              style={styles.button2}
-              onPress={() => { this.setState({ visibleModal: 6, moveRowdata: rowData }) }}
-            ><Icon name='more-vert' style={{right:0,flex:1}} /></TouchableOpacity>
+          visible={this.state.cancelFor3Selection}
+          onLongPress={() => {
+            Alert.alert(
+              'Action',
+              'please do your choice wisely',
+              [
+                { text: 'RENAME', onPress: () => { this.showDialog(rowData) } },
+                { text: 'DELETE', onPress: () => { this.deleteFunctionTriger(rowData) } },
+                { text: 'CANCEL', onPress: () => { this.cancelFor3Selection() } },
+              ],
+              { cancelable: false }
+            )
+          }}
+          onPress={() => { this.CheckingBeforeGoInFunction(rowData) }}
+        >
+          <Text>      </Text>
+          <Icon name='folder' />
+          <Text>  </Text>
+          <Text style={styles.buttonText}>{rowData}          </Text>
+          <TouchableOpacity
+            style={styles.button2}
+            onPress={() => { this.setState({ visibleModal: 6, moveRowdata: rowData }) }}
+          ><Icon name='more-vert' style={{right:0,flex:1}} /></TouchableOpacity>
 
-          </TouchableOpacity>
+        </TouchableOpacity>
+          </Swipeout>
+
+          
         
               
             } />
-      </View> 
+        </View> 
         <Text></Text>
         <Text style={{left:5,fontSize:23}}>File </Text>
 
         <View style={{justifyContent:'center',alignItems: 'center',}}>
+        
         <ListView
         dataSource={this.state.dataSource2}
         enableEmptySections="enable"
@@ -299,7 +338,8 @@ s
         // scrollEnabled={true}
         contentContainerStyle={styles.list}
         renderRow={(rowData) =>
-        
+          <Swipeout backgroundColor={'white'} style={{borderRadius:0}} right={this.HaveTowWork(rowData)} autoClose={true}>
+
           <TouchableOpacity
             delayLongPress={500}x
             style={styles.button1}
@@ -330,12 +370,12 @@ s
             ><Icon name='more-vert' style={{right:0,flex:1}} /></TouchableOpacity>
 
           </TouchableOpacity>
+          </Swipeout>
         
               
             } />
           
       </View> 
-    
     </View>
     ) 
   }
@@ -343,10 +383,6 @@ s
 tata=()=>{
   if(this.state.timer===2){
     this.setState({isVisible:false,timer:0})
-    console.log("tata is here----------------------",this.state.isVisible)
-    // console.log(this.state.isVisible);
-
-    
     return(null)
   }
 }
@@ -356,10 +392,14 @@ openPickDoc=()=>{
     filetype: [DocumentPickerUtil.images()],
   },(error,res) => {
     // Android
-    console.log("===================RESNAME=====>",res)
-    this.setState({ uploadFileName: res.fileName}, () => {
-      this.combineTwoStrings(res);
-    });
+
+    if(!error){
+      this.setState({ uploadFileName: res.fileName}, () => {
+        this.combineTwoStrings(res);
+      });
+    }
+
+    // add one toast message for cancel pick doc
   });
 }
 
@@ -367,7 +407,7 @@ combineTwoStrings = (res) => {
   // var string1 = "/Documents/";
   var string1 = "/";
   var string2 = string1.concat(this.state.uploadFileName)
-  this.setState({ uploadFileName: string2 }, () => {
+  this.setState({ }, () => {
     this._handleImagePicked(res);
   });
 }
@@ -412,13 +452,34 @@ uploadFileAsync = async (uri) => {
     this.state.password,
   );
 
-  wfs.writeFile(this.state.uploadFileName, blob, "binary", (err) => {
+  wfs.writeFile(this.state.uploadFileName, blob, "binary", async (err) => {
     if (err) {
       console.error(err.message);
     }
     else {
       console.log("added file =>> ",this.state.uploadFileName);
       alert("added ",this.state.uploadFileName);
+
+      // var statement = false;
+      // var testThing = false;
+
+      // var string1 = "/";
+      // var string2 = string1.concat(rowData)
+
+
+      // wfs.stat(string2, (err, data) => {
+      //   testThing = data.isFile();
+      //   if (statement !== testThing) {
+       this.state.forFileArray.push(this.state.uploadFileName);
+       this.testing();
+      //     this.testing();
+      //   }
+      //   else {
+      //     console.log(rowData);
+      //     this.state.testingArray.push(rowData);
+      //     this.testing();
+      //   }
+      // });
 
       //HERE NEED TO ADD A METHOD TO PUSH THE VAR TO THE ARRAY
 
@@ -514,12 +575,12 @@ uploadFileAsync = async (uri) => {
         {this.defaultView()}
         
         </ScrollView> 
-        <ActionButton buttonColor="#00008B" offsetY={17} offsetX={15}>
-          <ActionButton.Item buttonColor='#9b59b6' title="Upload File" onPress={() => this.openPickDoc()}>
-            <Icon name="update" style={styles.actionButtonIcon} />
+        <ActionButton buttonColor="#3498db" offsetY={17} offsetX={15}>
+          <ActionButton.Item buttonColor='#3498db' title="Upload File" onPress={() => this.openPickDoc()}>
+            <Icon name="folder-open" color='white' />
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#3498db' title="New Folder" onPress={() => {}}>
-            <Icon name="tune" style={styles.actionButtonIcon} />
+            <Icon name="folder" color='white' />
           </ActionButton.Item>
           {/* <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
             <Icon name="undo" style={styles.actionButtonIcon} />
@@ -578,8 +639,9 @@ const styles = StyleSheet.create({
   },
   button1: {
     width: 420,
-    backgroundColor: 'white',
-    borderRadius: 4,
+    backgroundColor: 'transparent',
+    borderColor:'transparent',
+    borderRadius: 0,
     height: 78,
     marginVertical: 1,
     textAlign: 'center',
@@ -587,4 +649,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row'
   },
+  subView: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "transparent",
+    height: 100,
+  }
 });

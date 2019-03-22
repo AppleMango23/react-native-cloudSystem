@@ -21,6 +21,7 @@
     "react-native-jelly-side-menu": "0.0.9",
     "react-native-modal": "^9.0.0",
     "react-native-svg": "^9.3.5",
+    "react-native-swipeout": "^2.3.6",
     "react-native-vector-icons": "^6.4.1",
     "react-navigation": "^3.4.1",
     "rn-sliding-button": "^1.1.5"

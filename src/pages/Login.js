@@ -138,7 +138,7 @@ export default class App extends Component {
               style={{
                 width: 240,
                 justifyContent: 'center',
-                backgroundColor: '#000080',
+                backgroundColor: '#3498db',
                 borderRadius: 20,
                 alignContent: 'center'
               }}
