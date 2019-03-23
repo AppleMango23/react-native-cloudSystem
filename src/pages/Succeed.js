@@ -11,6 +11,7 @@ import {
 import ActionButton from 'react-native-action-button';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import Swipeout from 'react-native-swipeout';
+import Dialog from "react-native-dialog";
 
 
 const instructions = Platform.select({
@@ -42,6 +43,8 @@ const instructions = Platform.select({
     
     
   ]
+
+  var counter=0;
 
   export default class Succeed extends Component {
   static navigationOptions = {
@@ -165,9 +168,7 @@ const instructions = Platform.select({
     }
   }
   pushFolderIntoArray = (rowData) => {
-    console.log(rowData);
     
-    // modifying move file 
     var statement = false;
     var testThing = false;
     const wfs = createWebDAVAdapter(
@@ -178,7 +179,7 @@ const instructions = Platform.select({
 
     var string1 = "/";
     var string2 = string1.concat(rowData)
-
+    
 
     wfs.stat(string2, (err, data) => {
       testThing = data.isFile();
@@ -233,21 +234,15 @@ const instructions = Platform.select({
 
   testingHaveToWork=(rowData)=>{
 
-
-    this.setState({closeOrOpenSlide:true}, () => {
-      // alert(rowData);
-
-    });
   }
 
-  HaveTowWork=(rowData)=>{
+  HaveTowWork=(rowData,WhoToDelete)=>{
     
     var swipeoutBtns22 = [
       {
         color:'green',
         text: 'rename',
         backgroundColor:'white',
-        //On press will go to this place
         onPress:()=>{ this.testingHaveToWork(rowData)}
         
       },
@@ -255,7 +250,7 @@ const instructions = Platform.select({
         color:'red',
         text: 'delete',
         backgroundColor:'white',
-        onPress:()=>{ this.testingHaveToWork(rowData)}
+        onPress:()=>{ this.deleteFile(rowData,WhoToDelete)}
       },
       {
         color:'black',
@@ -271,6 +266,46 @@ const instructions = Platform.select({
     return (swipeoutBtns22)
   }
 
+  deleteFile=(rowData,WhoToDelete)=>{
+    const wfs = createWebDAVAdapter(
+      this.state.side,
+      this.state.username,
+      this.state.password,
+    );
+
+
+    wfs.unlink(rowData, (err) => {
+      // handle error if truthy
+      if (!err) {
+        
+
+        if(WhoToDelete==='file'){
+          var index = this.state.forFileArray.indexOf(rowData)
+          this.state.forFileArray.splice(index, 1)
+        }
+        else{
+          var index = this.state.testingArray.indexOf(rowData)
+          this.state.testingArray.splice(index, 1)
+        }
+        
+        this.testing()
+        alert("deleted")        
+      }
+
+      else {
+        alert("error");
+      }
+
+    });
+  }
+
+  numberCounter=()=>{
+    counter += 1;
+    alert(counter);
+
+    return (null)
+  }
+
   defaultView=()=>{
     return(
     <View>
@@ -281,37 +316,24 @@ const instructions = Platform.select({
         <ListView
         dataSource={this.state.dataSource}
         enableEmptySections="enable"
-        //change this
-        // visible={this.visibleFunction()}
         renderSeparator={this.ListViewItemSeparator}
         // scrollEnabled={true}
         contentContainerStyle={styles.list}
         renderRow={(rowData) =>
-          <Swipeout backgroundColor={'white'} style={{borderRadius:0}} right={this.HaveTowWork(rowData)} autoClose={true}>
+          <Swipeout backgroundColor={'white'} style={{borderRadius:0}} right={this.HaveTowWork(rowData,'folder')} autoClose={true}>
+          {/* {this.numberCounter()} */}
+
           <TouchableOpacity
           delayLongPress={500}x
           style={styles.button1}
           // style={this.state.Noahyek}
-
-          visible={this.state.cancelFor3Selection}
-          onLongPress={() => {
-            Alert.alert(
-              'Action',
-              'please do your choice wisely',
-              [
-                { text: 'RENAME', onPress: () => { this.showDialog(rowData) } },
-                { text: 'DELETE', onPress: () => { this.deleteFunctionTriger(rowData) } },
-                { text: 'CANCEL', onPress: () => { this.cancelFor3Selection() } },
-              ],
-              { cancelable: false }
-            )
-          }}
+          // visible={false}
           onPress={() => { this.CheckingBeforeGoInFunction(rowData) }}
         >
           <Text>      </Text>
           <Icon name='folder' />
           <Text>  </Text>
-          <Text style={styles.buttonText}>{rowData}          </Text>
+          <Text style={styles.buttonText}>{rowData}         </Text>
           <TouchableOpacity
             style={styles.button2}
             onPress={() => { this.setState({ visibleModal: 6, moveRowdata: rowData }) }}
@@ -319,9 +341,6 @@ const instructions = Platform.select({
 
         </TouchableOpacity>
           </Swipeout>
-
-          
-        
               
             } />
         </View> 
@@ -333,31 +352,16 @@ const instructions = Platform.select({
         <ListView
         dataSource={this.state.dataSource2}
         enableEmptySections="enable"
-        visible={this.state.rowView}
         renderSeparator={this.ListViewItemSeparator}
-        // scrollEnabled={true}
         contentContainerStyle={styles.list}
         renderRow={(rowData) =>
-          <Swipeout backgroundColor={'white'} style={{borderRadius:0}} right={this.HaveTowWork(rowData)} autoClose={true}>
-
+          <Swipeout backgroundColor={'white'} style={{borderRadius:0}} right={this.HaveTowWork(rowData,'file')} autoClose={true}>
+          {/* {this.numberCounter()} */}
           <TouchableOpacity
             delayLongPress={500}x
             style={styles.button1}
             // style={this.state.Noahyek}
-
-            visible={this.state.cancelFor3Selection}
-            onLongPress={() => {
-              Alert.alert(
-                'Action',
-                'please do your choice wisely',
-                [
-                  { text: 'RENAME', onPress: () => { this.showDialog(rowData) } },
-                  { text: 'DELETE', onPress: () => { this.deleteFunctionTriger(rowData) } },
-                  { text: 'CANCEL', onPress: () => { this.cancelFor3Selection() } },
-                ],
-                { cancelable: false }
-              )
-            }}
+            // visible={false}
             onPress={() => { this.CheckingBeforeGoInFunction(rowData) }}
           >
             <Text>      </Text>
@@ -389,7 +393,7 @@ tata=()=>{
 
 openPickDoc=()=>{
   DocumentPicker.show({
-    filetype: [DocumentPickerUtil.images()],
+    filetype: [DocumentPickerUtil.allFiles()],
   },(error,res) => {
     // Android
 
@@ -460,48 +464,36 @@ uploadFileAsync = async (uri) => {
       console.log("added file =>> ",this.state.uploadFileName);
       alert("added ",this.state.uploadFileName);
 
-      // var statement = false;
-      // var testThing = false;
-
-      // var string1 = "/";
-      // var string2 = string1.concat(rowData)
-
-
-      // wfs.stat(string2, (err, data) => {
-      //   testThing = data.isFile();
-      //   if (statement !== testThing) {
        this.state.forFileArray.push(this.state.uploadFileName);
        this.testing();
-      //     this.testing();
-      //   }
-      //   else {
-      //     console.log(rowData);
-      //     this.state.testingArray.push(rowData);
-      //     this.testing();
-      //   }
-      // });
-
-      //HERE NEED TO ADD A METHOD TO PUSH THE VAR TO THE ARRAY
-
-      // this.refs.toast.show(<Text style={styles.exampleTextVer2}>File uploaded successfully!!</Text>, DURATION.LENGTH_LONG)
-
-      // const zaza = createWebDAVAdapter(
-      //   this.state.side,
-      //   this.state.username,
-      //   this.state.password,
-      // );
-      // zaza.readdir("/", (err, contents) => {
-      //   if (!err) {
-      //     this.setState({ contentInside: [contents] }, () => {    //test contents.type later
-      //       this.helloHopeThisCan();
-      //     });
-      //   }
-      // });
-      // alert("Uploaded");
+      
     }
-  });
-  blob.close();
-}
+    });
+    blob.close();
+  }
+
+    createNewFolderAction=()=>{
+      const wfs = createWebDAVAdapter(
+        this.state.side,
+        this.state.username,
+        this.state.password,
+      );
+  
+      var combineWord = "/" + this.state.wordForFolder
+      wfs.mkdir(combineWord, (err) => {
+        if (!err) {
+          this.setState({ dialogCreateFolderVisible: false },()=>{
+            this.state.testingArray.push(this.state.wordForFolder);
+            this.testing();
+          })
+          
+        }
+  
+        else {
+  
+        }
+      });
+    }
 
 
   
@@ -538,25 +530,6 @@ uploadFileAsync = async (uri) => {
 
         <Header
           placement="left"
-          // leftComponent={
-          //   <TouchableOpacity
-          //   style={{left:20,width:40,height:30,backgroundColor:'red'}}
-            
-          //   onPress={() => 
-          //       this.refs.toast.show(<Text style={styles.exampleTextVer2}>Folder created successfully!!</Text>, DURATION.LENGTH_LONG)
-          //       // {this.renderMenu}
-          //       // alert("hi")
-                
-          //     }
-          //   >
-          //   <Icon
-          //     name='right'
-          //     size={24}
-          //     color='black'
-              
-          //   />
-          //   </TouchableOpacity>
-          // }
           centerComponent={{ text: ' Bisston Cloud', style: { color: 'black',fontSize:22,fontWeight: "bold" } }}
           rightComponent={
             <Icon
@@ -571,7 +544,19 @@ uploadFileAsync = async (uri) => {
         />
         <ScrollView>
         
-        
+      <Dialog.Container visible={this.state.dialogCreateFolderVisible}>
+      <Dialog.Title>Edit file name</Dialog.Title>
+      <Dialog.Description>
+        Please enter the new folder name:
+      </Dialog.Description>
+        <Dialog.Input label="Folder name"
+          onChangeText={wordForFolder => this.setState({ wordForFolder })}
+          style={styles.textInputStyle}
+          placeholder="Enter new folder name here"
+        />
+        <Dialog.Button label="Okay" onPress={() => this.createNewFolderAction()}/> 
+        <Dialog.Button label="Cancel" onPress={() => this.setState({ dialogCreateFolderVisible: false })}/>
+      </Dialog.Container>
         {this.defaultView()}
         
         </ScrollView> 
@@ -579,12 +564,9 @@ uploadFileAsync = async (uri) => {
           <ActionButton.Item buttonColor='#3498db' title="Upload File" onPress={() => this.openPickDoc()}>
             <Icon name="folder-open" color='white' />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#3498db' title="New Folder" onPress={() => {}}>
+          <ActionButton.Item buttonColor='#3498db' title="New Folder" onPress={() => this.setState({ dialogCreateFolderVisible: true })}>
             <Icon name="folder" color='white' />
           </ActionButton.Item>
-          {/* <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
-            <Icon name="undo" style={styles.actionButtonIcon} />
-          </ActionButton.Item> */}
         </ActionButton>
  
         </JellySideMenu>
@@ -596,9 +578,6 @@ uploadFileAsync = async (uri) => {
 const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
-    // fontWeight: '500',
-    // color: 'white',
-    // textAlign: 'center',
   },
   button2: {
     width: 45,
